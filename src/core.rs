@@ -4,8 +4,7 @@ use crate::{Coordinate, GeohashError, Neighbors, Rect};
 use failure::Error;
 
 static BASE32_CODES: &'static [char] = &[
-    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k',
-    'm', 'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a','b', 'c', 'd', 'e', 'f',
 ];
 
 /// Encode a coordinate to a geohash with length `len`.
@@ -46,7 +45,7 @@ pub fn encode(c: Coordinate<f64>, len: usize) -> Result<String, Error> {
     }
 
     while out.len() < len {
-        for _ in 0..5 {
+        for _ in 0..4 {
             if bits_total % 2 == 0 {
                 let mid = (max_lon + min_lon) / 2f64;
                 if c.x > mid {
@@ -99,8 +98,8 @@ pub fn decode_bbox(hash_str: &str) -> Result<Rect<f64>, Error> {
     for c in hash_str.chars() {
         hash_value = hash_value_of_char(c)?;
 
-        for bs in 0..5 {
-            let bit = (hash_value >> (4 - bs)) & 1usize;
+        for bs in 0..4 {
+            let bit = (hash_value >> (3 - bs)) & 1usize;
             if is_lon {
                 mid = (max_lon + min_lon) / 2f64;
 
@@ -138,14 +137,8 @@ fn hash_value_of_char(c: char) -> Result<usize, Error> {
     let ord = c as usize;
     if 48 <= ord && ord <= 57 {
         return Ok(ord - 48);
-    } else if 98 <= ord && ord <= 104 {
-        return Ok(ord - 88);
-    } else if 106 <= ord && ord <= 107 {
-        return Ok(ord - 89);
-    } else if 109 <= ord && ord <= 110 {
-        return Ok(ord - 90);
-    } else if 112 <= ord && ord <= 122 {
-        return Ok(ord - 91);
+    } else if 97 <= ord && ord <= 102{
+        return Ok(ord - 87);
     }
     Err(GeohashError::InvalidHashCharacter { character: c })?
 }
@@ -199,13 +192,13 @@ pub fn decode(hash_str: &str) -> Result<(Coordinate<f64>, f64, f64), Error> {
     let c0 = rect.min;
     let c1 = rect.max;
     Ok((
-        Coordinate {
-            x: (c0.x + c1.x) / 2f64,
-            y: (c0.y + c1.y) / 2f64,
-        },
-        (c1.x - c0.x) / 2f64,
-        (c1.y - c0.y) / 2f64,
-    ))
+            Coordinate {
+                x: (c0.x + c1.x) / 2f64,
+                y: (c0.y + c1.y) / 2f64,
+            },
+            (c1.x - c0.x) / 2f64,
+            (c1.y - c0.y) / 2f64,
+            ))
 }
 
 /// Find neighboring geohashes for the given geohash and direction.
