@@ -168,7 +168,7 @@ fn hash_value_of_char(c: char) -> Result<usize, Error> {
 /// );
 /// ```
 ///
-/// Decoding a length eight geohash:
+/// Decoding a length ten geohash:
 ///
 /// ```rust
 /// let geohash_str = "4d8c0f1817";
