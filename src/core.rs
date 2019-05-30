@@ -18,7 +18,7 @@ static BASE32_CODES: &'static [char] = &[
 ///
 /// let geohash_string = geohash::encode(coord, 5).expect("Invalid coordinate");
 ///
-/// assert_eq!(geohash_string, "9q60y");
+/// assert_eq!(geohash_string, "4d8c0");
 /// ```
 ///
 /// Encoding a coordinate to a length ten geohash:
@@ -28,7 +28,7 @@ static BASE32_CODES: &'static [char] = &[
 ///
 /// let geohash_string = geohash::encode(coord, 10).expect("Invalid coordinate");
 ///
-/// assert_eq!(geohash_string, "9q60y60rhs");
+/// assert_eq!(geohash_string, "4d8c0f1817");
 /// ```
 pub fn encode(c: Coordinate<f64>, len: usize) -> Result<String, Error> {
     let mut out = String::with_capacity(len);
@@ -151,7 +151,7 @@ fn hash_value_of_char(c: char) -> Result<usize, Error> {
 /// Decoding a length five geohash:
 ///
 /// ```rust
-/// let geohash_str = "9q60y";
+/// let geohash_str = "4d8c0";
 ///
 /// let decoded = geohash::decode(geohash_str).expect("Invalid hash string");
 ///
@@ -159,19 +159,19 @@ fn hash_value_of_char(c: char) -> Result<usize, Error> {
 ///     decoded,
 ///     (
 ///         geohash::Coordinate {
-///             x: -120.65185546875,
-///             y: 35.31005859375,
+///             x: -120.76171875,
+///             y: 35.244140625,
 ///         },
-///         0.02197265625,
-///         0.02197265625,
+///         0.17578125,
+///         0.087890625,
 ///     ),
 /// );
 /// ```
 ///
-/// Decoding a length ten geohash:
+/// Decoding a length eight geohash:
 ///
 /// ```rust
-/// let geohash_str = "9q60y60rhs";
+/// let geohash_str = "4d8c0f1817";
 ///
 /// let decoded = geohash::decode(geohash_str).expect("Invalid hash string");
 ///
@@ -179,11 +179,11 @@ fn hash_value_of_char(c: char) -> Result<usize, Error> {
 ///     decoded,
 ///     (
 ///         geohash::Coordinate {
-///             x: -120.66229999065399,
-///             y: 35.300298035144806,
+///             x: -120.66232681274414,
+///             y: 35.30035972595215,
 ///         },
-///         0.000005364418029785156,
-///         0.000002682209014892578,
+///         0.000171661376953125,
+///         0.0000858306884765625,
 ///     ),
 /// );
 /// ```
@@ -218,21 +218,21 @@ pub fn neighbor(hash_str: &str, direction: Direction) -> Result<String, Error> {
 /// ### Examples
 ///
 /// ```
-/// let geohash_str = "9q60y60rhs";
+/// let geohash_str = "4d8c0f1817";
 ///
 /// let neighbors = geohash::neighbors(geohash_str).expect("Invalid hash string");
 ///
 /// assert_eq!(
 ///     neighbors,
 ///     geohash::Neighbors {
-///         n: "9q60y60rht".to_owned(),
-///         ne: "9q60y60rhv".to_owned(),
-///         e: "9q60y60rhu".to_owned(),
-///         se: "9q60y60rhg".to_owned(),
-///         s: "9q60y60rhe".to_owned(),
-///         sw: "9q60y60rh7".to_owned(),
-///         w: "9q60y60rhk".to_owned(),
-///         nw: "9q60y60rhm".to_owned(),
+///         n: "4d8c0f1842".to_owned(),
+///         ne: "4d8c0f1848".to_owned(),
+///         e: "4d8c0f181d".to_owned(),
+///         se: "4d8c0f181c".to_owned(),
+///         s: "4d8c0f1816".to_owned(),
+///         sw: "4d8c0f1814".to_owned(),
+///         w: "4d8c0f1815".to_owned(),
+///         nw: "4d8c0f1840".to_owned(),
 ///     }
 /// );
 /// ```

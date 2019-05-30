@@ -3,8 +3,9 @@
 //! # Geohash
 //!
 //! Geohash algorithm implementation in Rust. It encodes/decodes a
-//! longitude-latitude tuple into/from a hashed string. You can find
-//! more about geohash algorithm on [Wikipedia](https://en.wikipedia.org/wiki/Geohash)
+//! longitude-latitude tuple into/from a hashed string.
+//! You can find more about the original geohash algorithm on [Wikipedia](https://en.wikipedia.org/wiki/Geohash)
+//! This crate provides an alternative base16 encoded version
 //!
 //! ## Usage
 //! ```rust
@@ -20,11 +21,11 @@
 //!   println!("encoding 37.8324, 112.5584: {}", encode(c, 9usize)?);
 //!
 //!   // decode a geohash
-//!   let (c, _, _) = decode("ww8p1r4t8")?;
+//!   let (c, _, _) = decode("e71150dc9")?;
 //!   println!("decoding ww8p1r4t8 to: {}, {}", c.y, c.x);
 //!
 //!   // find a neighboring hash
-//!   let sw = neighbor("ww8p1r4t8", Direction::SW)?;
+//!   let sw = neighbor("e71150dc9", Direction::SW)?;
 //!
 //!   Ok(())
 //! }
